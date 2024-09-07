@@ -1,4 +1,6 @@
-﻿var lastUpdate = Date.now();
+﻿if(document.location.href.indexOf("file:")!=-1)document.location.replace("https://127.0.0.1:60007/index.html");
+
+var lastUpdate = Date.now();
 var diff = (Date.now() - lastUpdate) / 1000;
 var tiername = [null,
     "01", "02", "03", "04", "05", "06", "07", "08",
@@ -493,6 +495,12 @@ function hardReset() {
         nowtime: 0,
         news: true,
         hotk: true,
+		
+		
+		sucrose: {
+			exp: new Decimal(0),
+			weapon1: new Decimal(0),
+		}
     }
     player.energy = new Decimal(2);
 
@@ -1113,6 +1121,10 @@ var tempPlayer = player;
 
 load();
 
+Object.assign(tempPlayer.sucrose, player.sucrose);
+
+player.sucrose = tempPlayer.sucrose;
+
 Object.assign(tempPlayer, player);
 
 player = tempPlayer;
@@ -1135,7 +1147,7 @@ function get_offline_time() {
     }
     gui_mod = 1;
 }
-get_offline_time();
+//get_offline_time();
 
 function closeModal() {
     document.getElementById("offline").style.display = "none";
@@ -1423,6 +1435,9 @@ function getWscMult() {
     if (player.tier01.gte(6308)) wbpw = wbpw.mul(player.tthsize.max(1).pow(5));
     if (player.tier03.gte(50)) wbpw = wbpw.mul(player.tier03.sub(44).mul(0.25).max(1));
 
+	mult01to08 = mult01to08.mul(getSucroseBonus2());
+	mult09to16 = mult09to16.mul(getSucroseBonus3());
+
     if (player.tier01.gte(1)) mult01to08 = mult01to08.mul(player.tier01.add(1).pow(2));
     if (player.tier01.gte(2)) mult01to08 = mult01to08.mul(v.wscbaseValue.div(64).max(1));
     if (player.tier01.gte(5)) mult01to08 = mult01to08.mul(player.tier02.add(1).pow(3));
@@ -1434,9 +1449,10 @@ function getWscMult() {
     if (player.PL1upg[5] == true) mult09to16 = mult09to16.mul(player.PL1ptsttl.min(player.PL1ptsttl.add(1).log(1.189207115002721).pow(2).mul(281474976710656)).max(1));
     if (player.PL1upg[6] == true) mult09to16 = mult09to16.mul(player.PL1tms.pow(4).min(player.PL1tms.pow(0.25).mul(1.152921505e18)).max(1)); 
     if (player.PL1upg[7] == true) mult09to16 = mult09to16.mul(player.energy.add(1).log(2).max(1).pow(1.5)); 
-
+    if (player.PL1upg[12] == true) mult09to16 = mult09to16.mul(v.PL1engmul);
+	
     mult01to08 = mult01to08.mul(player.alef.max(1).pow(player.PL1bab10.mul(4)).min(1e12));
-    mult09to16 = mult09to16.mul(player.giml.max(1).pow(player.PL1bab12).div(4).min(1e12)).mul(player.anmpar.pow(player.parupg02.mul(0.25)).max(1));
+    mult09to16 = mult09to16.mul(player.giml.max(1).pow(player.PL1bab12).min(1e12)).mul(player.anmpar.pow(player.parupg02.mul(0.25)).max(1));
     
     if (player.orbupg[0] == true) mult01to08 = mult01to08.mul(player.PL1energy.add(1).log(2).pow(16));
     if (player.orbupg[1] == true) mult01to08 = mult01to08.mul(player.energy.add(1).log(2).pow(16));
@@ -1705,7 +1721,7 @@ function getWscHyp() {
 }
 
 function getWscMultPerBuy() {
-    v.wscmpb = new Decimal(1.6);
+    v.wscmpb = new Decimal(1).add(getSucroseBonus1());
     if (player.tier02.gte(1)) v.wscmpb = v.wscmpb.add(player.tier02.pow(0.25).mul(0.05));
     if (player.tier02.gte(5)) v.wscmpb = v.wscmpb.add(player.tier01.pow(0.25).mul(0.05));
     v.wscmpb = v.wscmpb.add(v.upge01).mul(v.upge02);
@@ -2116,10 +2132,10 @@ function autoBuyUpgd06() {
 function getUpgdMult() {
     let upgepw = new Decimal(1);
     let upgepw2 = new Decimal(1);
-    if (player.PL1upg[9] == true) v.upgd01mult = new Decimal(0.0625).mul(v.upge03);
-    else v.upgd01mult = new Decimal(0.025).mul(v.upge03);
-    if (player.PL1upg[10] == true) v.upgd02mult = new Decimal(1.044273782427413).pow(v.upge04);
-    else v.upgd02mult = new Decimal(1.021897148654116).pow(v.upge04);
+    if (player.PL1upg[9] == true) v.upgd01mult = new Decimal(0.04).mul(v.upge03);
+    else v.upgd01mult = new Decimal(0.02).mul(v.upge03);
+    if (player.PL1upg[10] == true) v.upgd02mult = new Decimal(1.02).pow(v.upge04);
+    else v.upgd02mult = new Decimal(1.01).pow(v.upge04);
     v.upge01 = v.upgd01mult.mul(player.upgd01.add(v.upgf01));
     v.upge02 = softcap(v.upgd02mult.pow(player.upgd02.add(v.upgf02)));
     v.upge03 = player.upgd03.add(v.upgf03).mul(0.25).mul(v.upge05).add(1);
@@ -2167,8 +2183,8 @@ async function PL1reset() {
     var confirmation = true;
     if (player.PL1conf == true) confirmation = confirm("您确定要扩散吗？这将重置能量、1~8式风灵作成、风单元、风模块、风灵升级，但是可以获得扩散点！第一次扩散解锁9~16式风灵和其他内容");
     if (confirmation | !player.PL1conf) {
-        player.PL1pts = player.PL1pts.add(player.energy.root(1024).floor());
-        player.PL1ptsttl = player.PL1ptsttl.add(player.energy.root(1024).floor());
+        player.PL1pts = player.PL1pts.add(player.energy.root(1024).mul(getSucroseBonus4()).floor());
+        player.PL1ptsttl = player.PL1ptsttl.add(player.energy.root(1024).mul(getSucroseBonus4()).floor());
         player.PL1tms = player.PL1tms.add(getPL1tms());
         player.hasUnlockedPL1 = true;
 
@@ -2217,14 +2233,15 @@ function getPL1tms() {
 
 function getPL1engMul() {
     if (player.incha == 1 | player.incha == 9) v.PL1engmul = new Decimal(1e-100).pow(v.PL1engpow);
-    else v.PL1engmul = player.PL1energy.pow(v.PL1engpow).max(1);
+    else if (player.PL1upg[12] == true)v.PL1engmul = player.PL1energy.pow(v.PL1engpow).max(1);
+	else v.PL1engmul = player.PL1energy.pow(v.PL1engpow).max(1).min(1e24);
 }
 
 function getPL1engPow() {
-    if (player.innormcha == 11) v.PL1engpow = new Decimal(0.1);
-    else v.PL1engpow = new Decimal(1);
-    if (player.PL1upg[8] == true) v.PL1engpow = v.PL1engpow.add(0.5);
-    v.PL1engpow = v.PL1engpow.add(player.PL1bab07.add(player.PL1bab08).add(player.PL1bab09).mul(0.1)).add(player.chacom01.min(player.chacom01.pow(0.5).mul(2)).mul(0.25));
+    v.PL1engpow = new Decimal(0.1);
+    if (player.PL1upg[8] == true) v.PL1engpow = v.PL1engpow.add(0.01);
+    if (player.PL1upg[12] == true) v.PL1engpow = v.PL1engpow.sub(0.065);
+    v.PL1engpow = v.PL1engpow.add(player.PL1bab07.add(player.PL1bab08).add(player.PL1bab09).mul(0.001)).add(player.chacom01.min(player.chacom01.pow(0.5).mul(2)).mul(0.25));
     if (player.std[2] == true) {
         v.PL1engpow = v.PL1engpow.add(1);
     }
@@ -2238,7 +2255,7 @@ function buyPL1upg(tier) {
     var PL1upgcost = [4, 8, 12, 16,
         32, 64, 128, 256,
         1024, 4096, 16384, 65536,
-        1048576, 16777216, 268435456, 4294967296,];
+        262144, 1048576, 4194304, 16777216,];
     if (player.PL1pts.gte(new Decimal(PL1upgcost[tier])) & player.PL1upg[tier] == false) {
         player.PL1upg[tier] = true;
         player.PL1pts = player.PL1pts.sub(new Decimal(PL1upgcost[tier]));
@@ -4493,10 +4510,10 @@ function produce(spd = 1) {
         let prev = tiername[tier - 1];
         player["wsca" + prev] = player["wsca" + prev].add(player["wsca" + name].mul(v["wscm" + name]).pow(v["wscp" + name]).hyp(v["wsch" + name]).mul(speed).mul(v.baseprd));
     }
-    if (player.PL1upg[12] == true & player.sta8n1 == true) { player.wsca08 = player.wsca08.add(hyp(player.wsca09.mul(v.wscm09).pow(v.wscp09), v.wsch09).pow(v.PL1engpow.pow(v.cpper).max(1)).mul(speed).mul(v.baseprd)); }
-    if (player.std[18] == true & player.incha != 8 & player.incha != 9 & player.PL1pts.lte(player.energy.root(1024).floor())) {
-        player.PL1pts = player.PL1pts.add(player.energy.root(1024).floor().mul(speed));
-        player.PL1ptsttl = player.PL1ptsttl.add(player.energy.root(1024).floor().mul(speed));
+    if (/*player.PL1upg[12] == true & */player.sta8n1 == true) { player.wsca08 = player.wsca08.add(hyp(player.wsca09.mul(v.wscm09).pow(v.wscp09), v.wsch09).pow(v.PL1engpow.pow(v.cpper).max(1)).mul(speed).mul(v.baseprd)); }
+    if (player.std[18] == true & player.incha != 8 & player.incha != 9 & player.PL1pts.lte(player.energy.root(1024).mul(getSucroseBonus4()).floor())) {
+        player.PL1pts = player.PL1pts.add(player.energy.root(1024).mul(getSucroseBonus4()).floor().mul(speed));
+        player.PL1ptsttl = player.PL1ptsttl.add(player.energy.root(1024).mul(getSucroseBonus4()).floor().mul(speed));
     }
     if (player.alcu[1] == true) player.PL1tms = player.PL1tms.add(getPL1tms().mul(speed));
 
@@ -5019,8 +5036,8 @@ function updateGUI() {
     if (player.upgd04.add(v.upgf04).gte(16)) document.getElementById("upgd04sc").innerHTML = "(受软上限限制)";
     else document.getElementById("upgd04sc").innerHTML = "";
 
-    document.getElementById("PL1ptspd").innerHTML = notation(player.energy.root(1024).floor()) + "扩散点";
-    document.getElementById("PL1ptsnx").innerHTML = "，下一扩散点在" + notation(player.energy.root(1024).floor().add(1).pow(1024)) + "能量";
+    document.getElementById("PL1ptspd").innerHTML = notation(player.energy.root(1024).mul(getSucroseBonus4()).floor()) + "扩散点";
+    document.getElementById("PL1ptsnx").innerHTML = "，下一扩散点在" + notation(player.energy.root(1024).mul(getSucroseBonus4()).floor().add(1).div(getSucroseBonus4()).pow(1024)) + "能量";
     document.getElementById("PL2ptspd").innerHTML = notation(player.PL1pts.root(1024).floor()) + "扪敤点";
     document.getElementById("PL2ptsnx").innerHTML = "，下一扪敤点在" + notation(player.PL1pts.root(1024).floor().add(1).pow(1024)) + "扩散点";
     document.getElementById("PL3ptspd").innerHTML = notation(player.PL2pts.root(1048576).floor()) + "扫敥点";
@@ -5031,6 +5048,8 @@ function updateGUI() {
     document.getElementById("PL1Pts").innerHTML = notatint(player.PL1pts);
     document.getElementById("PL1Eng").innerHTML = notation(player.PL1energy);
     document.getElementById("PL1EngPow").innerHTML = notation(v.PL1engpow);
+    document.getElementById("PL1EngPow2").innerHTML = "的指数将1~8式风灵的效果乘以";
+    if(player.PL1upg[12])document.getElementById("PL1EngPow2").innerHTML = "的指数将1~16式风灵的效果乘以";
     document.getElementById("PL1EngMul").innerHTML = notation(v.PL1engmul);
     document.getElementById("PL1EngPs").innerHTML = notation(player.wsca09.mul(v.wscm09).pow(v.wscp09).mul(new Decimal(0.25)));
 
@@ -5566,10 +5585,10 @@ function styleDisplay() {
     if (player.energy.gte(getsoftcap())) document.getElementById("softcap").style.display = 'block';
     else document.getElementById("softcap").style.display = 'none';
 
-    if (player.tier01.eq(0)) document.getElementById("tier01info").innerHTML = "在1式风单元，将基于风单元式数提升1~8式风灵乘数(1+n)²。";
+    if (player.tier01.eq(0)) document.getElementById("tier01info").innerHTML = "在1式风单元，将基于风单元式数提升1~8式风灵乘数(1+n)²。同时基于风灵基础值提升砂糖攻击力。";
     if (player.tier01.gte(1)) {
         document.getElementById("tier01rewa01").style.display = 'block';
-        document.getElementById("tier01info").innerHTML = "在2式风单元，将基于风灵基础值提升1~8式风灵乘数max(1,n/64)。";
+        document.getElementById("tier01info").innerHTML = "在2式风单元，将基于风灵基础值提升1~8式风灵乘数max(1,n/64)。同时基于风单元式数提升砂糖攻击力。";
     }
     else document.getElementById("tier01rewa01").style.display = 'none';
     if (player.tier01.gte(2)) {
@@ -5584,12 +5603,12 @@ function styleDisplay() {
     else document.getElementById("tier01rewa03").style.display = 'none';
     if (player.tier01.gte(10)) {
         document.getElementById("tier01rewa04").style.display = 'block';
-        document.getElementById("tier01info").innerHTML = "在25式风单元，将使每个风单元使1~8式风灵乘数×2";
+        document.getElementById("tier01info").innerHTML = "在25式风单元，将使每个风单元使1~8式风灵乘数×2。同时基于扩散点提升砂糖攻击力。";
     }
     else document.getElementById("tier01rewa04").style.display = 'none';
     if (player.tier01.gte(25)) {
         document.getElementById("tier01rewa05").style.display = 'block';
-        document.getElementById("tier01info").innerHTML = "在63式风单元，将使1和5式风单元奖励也对9~16式风灵生效";
+        document.getElementById("tier01info").innerHTML = "在63式风单元，将使1和5式风单元奖励也对9~16式风灵生效。同时基于风单元式数提升砂糖攻击力。";
     }
     else document.getElementById("tier01rewa05").style.display = 'none';
     if (player.tier01.gte(63)) {
@@ -5618,7 +5637,7 @@ function styleDisplay() {
     }
     else document.getElementById("tier01rewa10").style.display = 'none';
 
-    if (player.tier02.eq(0)) document.getElementById("tier02info").innerHTML = "在1式风模块，将基于风模块式数提升风灵每次作成乘数(+0.05×n^0.25)，并解锁第一个升级。";
+    if (player.tier02.eq(0)) document.getElementById("tier02info").innerHTML = "在1式风模块，将基于风模块式数提升风灵每次作成乘数(+0.05×n^0.25)，并解锁第一个升级。同时基于风模块式数提升砂糖攻击力。";
     if (player.tier02.gte(1)) {
         document.getElementById("tier02rewa01").style.display = 'block';
         document.getElementById("tier02info").innerHTML = "在2式风模块，将解锁第二个升级。";
@@ -6218,7 +6237,7 @@ function comAch() {
 
     if (player.PL1tms.gt(0)) getAch(16);
     if (player.PL1energy.gte(1e6)) getAch(17);
-    if (player.energy.root(1024).floor().gte(100)) getAch(18);
+    if (player.energy.root(1024).mul(getSucroseBonus4()).floor().gte(100)) getAch(18);
     if (player.normchacom[0] & player.normchacom[1] & player.normchacom[2] & player.normchacom[3] & player.normchacom[4] &player.normchacom[5] & player.normchacom[6] & player.normchacom[7] & player.normchacom[8] & player.normchacom[9] &player.normchacom[10] & player.normchacom[11]) getAch(19);
     if (player.wscb16.gt(0)) getAch(20);
     if (player.PL1upg[15] == true) getAch(21);

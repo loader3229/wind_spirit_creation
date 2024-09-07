@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=0.25, maximum-scale=4.0, user-scalable=yes" />
-        <title>风灵作成</title>
+        <title>风灵作成NG-</title>
         <link href="style.css" rel="stylesheet" type="text/css" />
         <link href="icon.png" rel="shortcut icon" type="image/x-icon" />
     </head>
@@ -40,7 +40,7 @@
         </p>
         <p align="center" id="PL1info" style="margin: auto; font-size: 16px; color: #ff0000; width: 64%; display: none">
             <span>你有</span><span id="PL1Pts">0</span><span>扩散点,</span><span id="PL1Eng">1</span><span>扩散能量(+</span><span id="PL1EngPs">0</span><span>/s),</span>
-            <span>它以</span><span id="PL1EngPow">1</span><span>的指数将1~8式风灵的效果乘以</span><span id="PL1EngMul">1</span><span>倍。</span>
+            <span>它以</span><span id="PL1EngPow">1</span><span id="PL1EngPow2">的指数将1~8式风灵的效果乘以</span><span id="PL1EngMul">1</span><span>倍。</span>
         </p>
         <p align="center" id="PL2info" style="margin: auto; font-size: 16px; color: #ffff00; width: 64%; display: none ">
             <span>你有</span><span id="PL2Pts">0</span><span>扪敤点,</span><span id="PL2Eng">1</span><span>扪敤能量(+</span><span id="PL2EngPs">0</span><span>/s),</span>
@@ -91,12 +91,14 @@
             <button align="center" class="slbutton" style="background-color: #ffffff; color: #000000;" id="btp1_1" onclick="changePg('p1_1')">风灵</button>
             <button align="center" class="button" style="background-color: #ffffff; color: #000000;" id="btp1_2" onclick="changePg('p1_2')">元素生命</button>
             <button align="center" class="button" style="background-color: #ffffff; color: #000000;" id="btp1_3" onclick="changePg('p1_3')">升级</button>
+            <button align="center" class="button" style="background-color: #ffffff; color: #000000;" id="btp1_4" onclick="changePg('p1_4')">砂糖</button>
         </div>
         <div class="btnrow" id="row2" style="display: none">
             <button align="center" class="slbutton" style="background-color: #ff0000; color: #ffffff;" id="btp2_1" onclick="changePg('p2_1')">扩散升级</button>
             <button align="center" class="button" style="background-color: #ff0000; color: #ffffff;" id="btp2_2" onclick="changePg('p2_2')">购买项</button>
             <button align="center" class="button" style="background-color: #ff0000; color: #ffffff;" id="btp2_3" onclick="changePg('p2_3')">挑战</button>
             <button align="center" class="button" style="background-color: #ff0000; color: #ffffff;" id="btp2_4" onclick="changePg('p2_4')">风之晶球</button>
+            <button align="center" class="button" style="background-color: #ff0000; color: #ffffff;" id="btp2_5" onclick="changePg('p2_5')">砂糖的法器</button>
         </div>
         <div class="btnrow" id="row3" style="display: none">
             <button align="center" class="slbutton" style="background-color: #ffff00; color: #000000;" id="btp3_1" onclick="changePg('p3_1')">里程碑</button>
@@ -732,6 +734,10 @@
                 <span id="upge06">当前：</span><span id="upgd06sc"></span>
             </div>
         </div>
+        <div id="p1_4" style="display: none">
+            <br />
+            <iframe src="sucrose.html" width="100%" height="600px"></iframe>
+        </div>
         <div id="p2_1" style="display: none">
             <br />
             <table align="center">
@@ -748,16 +754,16 @@
                     <td><button class="PL1upgno" id="PL1upg08" onclick="buyPL1upg(7)">基于log2能量^1.5乘以9~16式风灵乘数<br />当前：×<span id="PL1upge08"></span><br />花费：256扩散点</button></td>
                 </tr>
                 <tr>
-                    <td><button class="PL1upgno" id="PL1upg09" onclick="buyPL1upg(8)">扩散能量指数增加0.5<br />花费：1024扩散点</button></td>
-                    <td><button class="PL1upgno" id="PL1upg10" onclick="buyPL1upg(9)">风灵升级1基础倍率增加到0.0625<br />花费：4096扩散点</button></td>
-                    <td><button class="PL1upgno" id="PL1upg11" onclick="buyPL1upg(10)">风灵升级2基础倍率增加到1.044<br />花费：16384扩散点</button></td>
+                    <td><button class="PL1upgno" id="PL1upg09" onclick="buyPL1upg(8)">扩散能量指数增加0.01<br />花费：1024扩散点</button></td>
+                    <td><button class="PL1upgno" id="PL1upg10" onclick="buyPL1upg(9)">风灵升级1基础倍率增加到0.04<br />花费：4096扩散点</button></td>
+                    <td><button class="PL1upgno" id="PL1upg11" onclick="buyPL1upg(10)">风灵升级2基础倍率增加到1.02<br />花费：16384扩散点</button></td>
                     <td><button class="PL1upgno" id="PL1upg12" onclick="buyPL1upg(11)">解锁购买项<br />花费：65536扩散点</button></td>
                 </tr>
                 <tr>
-                    <td><button class="PL1upgno" id="PL1upg13" onclick="buyPL1upg(12)">玖式风灵可以生产捌式风灵<br />花费：1.048e6扩散点</button></td>
-                    <td><button class="PL1upgno" id="PL1upg14" onclick="buyPL1upg(13)">风单元不再重置任何东西<br />花费：1.677e7扩散点</button></td>
-                    <td><button class="PL1upgno" id="PL1upg15" onclick="buyPL1upg(14)">风模块不再重置任何东西<br />花费：2.684e8扩散点</button></td>
-                    <td><button class="PL1upgno" id="PL1upg16" onclick="buyPL1upg(15)">将每次作成乘数乘以1.25<br />花费：4.294e9扩散点</button></td>
+					<td><button class="PL1upgno" id="PL1upg13" onclick="buyPL1upg(12)">去除扩散能量效果的一级上限，扩散能量效果对9~16式风灵生效，扩散能量指数减少0.065<br />花费：262144扩散点</button></td>
+                    <td><button class="PL1upgno" id="PL1upg14" onclick="buyPL1upg(13)">风单元不再重置任何东西<br />花费：1048576扩散点</button></td>
+                    <td><button class="PL1upgno" id="PL1upg15" onclick="buyPL1upg(14)">风模块不再重置任何东西<br />花费：4194304扩散点</button></td>
+                    <td><button class="PL1upgno" id="PL1upg16" onclick="buyPL1upg(15)">将每次作成乘数乘以1.25<br />花费：16777216扩散点</button></td>
                 </tr>
             </table>
         </div>
@@ -784,9 +790,9 @@
                         <td><button class="PL1upgno" id="bab06" onclick="buyPL1bab(6)">使12式风模块的效果+20%（<span id="PL1bab06"></span>/5）<br />花费：<span id="PL1babc6"></span>基末尔</button></td>
                     </tr>
                     <tr>
-                        <td><button class="PL1upgno" id="bab07" onclick="buyPL1bab(7)">使扩散能量指数增加0.1（<span id="PL1bab07"></span>/5）<br />花费：<span id="PL1babc7"></span>阿列夫</button></td>
-                        <td><button class="PL1upgno" id="bab08" onclick="buyPL1bab(8)">使扩散能量指数增加0.1（<span id="PL1bab08"></span>/5）<br />花费：<span id="PL1babc8"></span>贝特</button></td>
-                        <td><button class="PL1upgno" id="bab09" onclick="buyPL1bab(9)">使扩散能量指数增加0.1（<span id="PL1bab09"></span>/5）<br />花费：<span id="PL1babc9"></span>基末尔</button></td>
+                        <td><button class="PL1upgno" id="bab07" onclick="buyPL1bab(7)">使扩散能量指数增加0.001（<span id="PL1bab07"></span>/5）<br />花费：<span id="PL1babc7"></span>阿列夫</button></td>
+                        <td><button class="PL1upgno" id="bab08" onclick="buyPL1bab(8)">使扩散能量指数增加0.001（<span id="PL1bab08"></span>/5）<br />花费：<span id="PL1babc8"></span>贝特</button></td>
+                        <td><button class="PL1upgno" id="bab09" onclick="buyPL1bab(9)">使扩散能量指数增加0.001（<span id="PL1bab09"></span>/5）<br />花费：<span id="PL1babc9"></span>基末尔</button></td>
                     </tr>
                     <tr>
                         <td><button class="PL1upgno" id="bab10" onclick="buyPL1bab(10)">基于阿列夫增益1~8式风灵乘数（<span id="PL1bab10"></span>/5）<br />×<span id="PL1babe10"></span><br />花费：<span id="PL1babc10"></span>阿列夫</button></td>
@@ -955,6 +961,10 @@
                     </tr>
                 </table>
             </div>
+        </div>
+        <div id="p2_5" style="display: none">
+            <br />
+            <iframe src="weapon.html" width="100%" height="600px"></iframe>
         </div>
         <div id="p3_1" style="display: none">
             <div class="ftsz2" style="color: #ffffff; text-align: center" id="PL2tms2"></div>
@@ -2420,6 +2430,7 @@
             </div>
         </div>
         <script type="text/javascript" src="break_eternity.js"></script>
+		<script type="text/javascript" src="sucrose.js"></script>
         <script type="text/javascript" src="game.js"></script>
     </body>
     </html>
