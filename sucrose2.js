@@ -70,12 +70,13 @@ function attack3(){
 function update(){
 	document.getElementById("sucrose1").innerHTML=formatWhole(getSucroseLevel())+" EXP:"+formatWhole(Decimal.fromDecimal(window.parent.player.sucrose.exp))+"/"+formatWhole(getSucroseLevelRequirement())+" ATK:"+formatWhole(getBaseAttack());
 	document.getElementById("sucrose2").innerHTML="简式风灵攻击（消耗"+format(getAttackEnergy().div(Decimal.fromDecimal(window.parent.player.energy.add(1))).mul(100))+"%"+"能量）";
-	//document.getElementById("sucrose2").innerHTML="简式风灵攻击（消耗"+formatWhole(getAttackEnergy())+"能量）";
+	if(window.parent.player.energy.lte(100))document.getElementById("sucrose2").innerHTML="简式风灵攻击（需要至少100能量）";
 	document.getElementById("sucrose3").style.display=(getSucroseLevel().gte(20)?"":"none");
 	document.getElementById("sucrose3").innerHTML="召唤小型风灵（消耗"+format(getAttackEnergy2().div(Decimal.fromDecimal(window.parent.player.energy.add(1))).mul(100))+"%"+"能量）";
-	//document.getElementById("sucrose3").innerHTML="召唤小型风灵（消耗"+formatWhole(getAttackEnergy2())+"能量）";
+	if(window.parent.player.energy.lte(1e60))document.getElementById("sucrose3").innerHTML="召唤小型风灵（需要至少1e60能量）";
 	document.getElementById("sucrose4").style.display=(getSucroseLevel().gte(50)?"":"none");
 	document.getElementById("sucrose4").innerHTML="召唤持续风灵（消耗"+format(getAttackEnergy3().div(Decimal.fromDecimal(window.parent.player.energy.add(1))).mul(100))+"%"+"能量）";
+	if(window.parent.player.energy.lte(1e100))document.getElementById("sucrose4").innerHTML="召唤持续风灵（需要至少1e100能量）";
 	document.getElementById("monster").innerHTML=monsterInfo[monsterId][0]+" HP:"+formatWhole(monsterHP)+"/"+formatWhole(monsterInfo[monsterId][1]);
 	document.getElementById("b1").innerHTML=format(getSucroseBonus1());
 	document.getElementById("b2").innerHTML=format(getSucroseBonus2());
