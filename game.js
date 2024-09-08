@@ -495,7 +495,6 @@ function hardReset() {
         nowtime: 0,
         news: true,
         hotk: true,
-        hasNaN: false,
 		
         sucrose: {
             level: new Decimal(0),
