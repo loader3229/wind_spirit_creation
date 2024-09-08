@@ -1,10 +1,17 @@
-﻿function getSucroseLevel(){
-	return Decimal.fromDecimal(window.parent.player.sucrose.exp).add(1).log10().pow(2).add(1).floor();
+﻿function sucroseLevelUp() {
+	if (window.parent.player.sucrose.exp.gte(getSucroseLevelRequirement())) {
+		window.parent.player.sucrose.level = window.parent.player.sucrose.level.add(1);
+		window.parent.player.sucrose.exp = new Decimal(0);
+	}
+}
+
+function getSucroseLevel() {
+	return window.parent.player.sucrose.level;
 }
 
 function getSucroseLevelRequirement(){
-	if (getSucroseLevel().gte(80)) return Decimal.pow(2, getSucroseLevel().div(10).pow(2).div(8)).mul(1000);
-	else return Decimal.pow(2, getSucroseLevel().div(10)).mul(1000);
+	if (getSucroseLevel().gte(80)) return Decimal.pow(2, getSucroseLevel().add(1).div(10).pow(2).div(8)).mul(1000);
+	else return Decimal.pow(2, getSucroseLevel().add(1).div(10)).mul(1000);
 }
 
 function getSucroseBonus1(){

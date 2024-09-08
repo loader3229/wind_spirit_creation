@@ -89,7 +89,9 @@ function update(){
 			window.parent.player.sucrose.exp=window.parent.player.sucrose.exp.add(monsterInfo[monsterId][2]);
 			if(getAttack().mul(5).gte(monsterInfo[monsterId][1]) && monsterInfo[monsterId+1][1])monsterId++;
 			monsterHP=new Decimal(monsterInfo[monsterId][1]);
-		}
+	}
+
+	sucroseLevelUp();
 }
 if(window.parent==window){
 	document.location.replace('./index.html');
