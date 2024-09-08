@@ -1,4 +1,6 @@
-var player.hasNaN = false;
+player={
+    hasNaN: false,
+}
 function exponentialFormat(num, precision, mantissa = true) {
     let e = num.log10().floor()
     let m = num.div(Decimal.pow(10, e))
