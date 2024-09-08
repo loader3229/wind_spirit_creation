@@ -68,7 +68,7 @@ function attack3(){
 }
 
 function update(){
-	document.getElementById("sucrose1").innerHTML=formatWhole(getSucroseLevel())+" EXP:"+formatWhole(Decimal.fromDecimal(window.parent.player.sucrose.exp))+"/"+formatWhole(getSucroseLevelRequirement())+" ATK:"+formatWhole(getBaseAttack());
+	document.getElementById("sucrose1").innerHTML = formatWhole(window.parent.player.sucrose.level)+" EXP:"+formatWhole(Decimal.fromDecimal(window.parent.player.sucrose.exp))+"/"+formatWhole(getSucroseLevelRequirement())+" ATK:"+formatWhole(getBaseAttack());
 	document.getElementById("sucrose2").innerHTML="简式风灵攻击（消耗"+format(getAttackEnergy().div(Decimal.fromDecimal(window.parent.player.energy.add(1))).mul(100))+"%"+"能量）";
 	if(window.parent.player.energy.lte(100))document.getElementById("sucrose2").innerHTML="简式风灵攻击（需要至少100能量）";
 	document.getElementById("sucrose3").style.display=(getSucroseLevel().gte(20)?"":"none");
