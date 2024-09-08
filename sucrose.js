@@ -3,7 +3,8 @@
 }
 
 function getSucroseLevelRequirement(){
-	return Decimal.pow(10,getSucroseLevel().sqrt()).sub(1);
+	if (getSucroseLevel().gte(80)) return Decimal.pow(2, getSucroseLevel().div(10).pow(2).div(8)).mul(1000);
+	else return Decimal.pow(2, getSucroseLevel().div(10)).mul(1000);
 }
 
 function getSucroseBonus1(){
