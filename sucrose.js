@@ -60,7 +60,7 @@ function getWeaponBonus2(){
 
 var Attack2Time=0;
 function getBaseAttack(){
-	let ret=getSucroseLevel().pow(1.1).mul(3).add(Decimal.fromDecimal(window.parent.player.sucrose.weapon1).add(1).mul(7)).mul((Date.now()-Attack2Time<2500)?1.5:1);
+	let ret=getSucroseLevel().max(1).pow(1.1).mul(3).add(Decimal.fromDecimal(window.parent.player.sucrose.weapon1).add(1).mul(7)).mul((Date.now()-Attack2Time<2500)?1.5:1);
 	if(window.parent.player.tier01.gte(1)){
 		ret=ret.mul(Decimal.fromDecimal(window.parent.v.wscbaseValue.sqrt().div(10).add(1)));
 	}
