@@ -68,7 +68,7 @@ function attack3(){
 }
 
 function update(){
-	document.getElementById("sucrose1").innerHTML = formatWhole(window.parent.player.sucrose.level)+" EXP:"+formatWhole(Decimal.fromDecimal(window.parent.player.sucrose.exp))+"/"+formatWhole(getSucroseLevelRequirement())+" ATK:"+formatWhole(getBaseAttack());
+	document.getElementById("sucrose1").innerHTML = formatWhole(Decimal.fromDecimal(window.parent.player.sucrose.level))+" EXP:"+formatWhole(Decimal.fromDecimal(window.parent.player.sucrose.exp))+"/"+formatWhole(getSucroseLevelRequirement())+" ATK:"+formatWhole(getBaseAttack());
 	document.getElementById("sucrose2").innerHTML="简式风灵攻击（消耗"+format(getAttackEnergy().div(Decimal.fromDecimal(window.parent.player.energy.add(1))).mul(100))+"%"+"能量）";
 	if(window.parent.player.energy.lte(100))document.getElementById("sucrose2").innerHTML="简式风灵攻击（需要至少100能量）";
 	document.getElementById("sucrose3").style.display=(getSucroseLevel().gte(20)?"":"none");
@@ -99,26 +99,27 @@ if(window.parent==window){
 	setInterval(update,50);
 }
 var monsterInfo=[
-	["水史莱姆 Lv5",161,150],
-	["火史莱姆 Lv10",259,220],
-	["冰史莱姆 Lv15",417,330],
-	["岩史莱姆 Lv20",672,500],
+	["水史莱姆 Lv5", 161, 150],
+	["火史莱姆 Lv10",259, 220],
+	["冰史莱姆 Lv15",417, 330],
+	["岩史莱姆 Lv20",672, 500],
 	["草史莱姆 Lv25",1083,750],
 	["雷史莱姆 Lv30",1744,1000],
 	
-	["丘丘人 Lv35",2500,1250],
-	["打手丘丘人 Lv40",4000,1600],
-	["冲锋丘丘人 Lv45",6500,2000],
-	["木盾丘丘人 Lv50",10000,2500],
-	["射手丘丘人 Lv55",16000,3200],
-	["火箭丘丘人 Lv60",25000,4000],
-	["雷箭丘丘人 Lv65",40000,5000],
-	["冰箭丘丘人 Lv70",65000,6400],
-	["爆弹丘丘人 Lv75",1e5,8000],
-	["岩盾丘丘人 Lv80",1.6e5,10000],
-	["冰盾丘丘人 Lv85",2.5e5,11200],
-	
-	["火斧丘丘暴徒 Lv90",4e5,12400],
-	["木盾丘丘暴徒 Lv95",6.5e5,13700],
-	["岩盾丘丘暴徒 Lv100",1e6,15000],
+	["丘丘人 Lv35",   2560, 1250],
+	["木盾丘丘人 Lv40",4000, 1600],
+	["火箭丘丘人 Lv45",6500, 2000],
+	["雷箭丘丘人 Lv50",10000,2500],
+	["冰箭丘丘人 Lv55",16000,3200],
+	["岩盾丘丘人 Lv60",25000,4000],
+
+	["火斧丘丘暴徒 Lv65",40000,5000],
+	["木盾丘丘暴徒 Lv70",65000,6400],
+	["岩盾丘丘暴徒 Lv75", 1e5 ,8000],
+	["冰盾丘丘暴徒 Lv80",1.6e5,10000],
+	["雷斧丘丘暴徒 Lv85",2.5e5,11200],
+	["水行丘丘游侠 Lv90", 4e5 ,12400],
+
+	["遗迹守卫 Lv95",6.5e5,13700],
+	["遗迹猎者 Lv100",1e6 ,15000],
 ];
