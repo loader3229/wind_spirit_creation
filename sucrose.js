@@ -1,5 +1,5 @@
 ﻿function sucroseLevelUp() {
-	if (window.parent.player.sucrose.exp.gte(getSucroseLevelRequirement())) {
+	if (Decimal.fromDecimal(window.parent.player.sucrose.exp).gte(getSucroseLevelRequirement())) {
 		window.parent.player.sucrose.level = Decimal.fromDecimal(window.parent.player.sucrose.level.add(1));
 		window.parent.player.sucrose.exp = new Decimal(0);
 	}
@@ -60,17 +60,17 @@ function getWeaponBonus2(){
 
 var Attack2Time=0;
 function getBaseAttack(){
-	let ret = getSucroseLevel().add(7.568).pow(1.132).add(Decimal.fromDecimal(window.parent.player.sucrose.weapon1).add(11.132).pow(1.066).mul(2)).mul((Date.now()-Attack2Time<2500)?1.5:1);
+	let ret = getSucroseLevel().pow(1.132).add(7.568).add(Decimal.fromDecimal(window.parent.player.sucrose.weapon1).pow(1.066).mul(2).add(11.132)).mul((Date.now()-Attack2Time<2500)?1.5:1);
 	if(window.parent.player.tier01.gte(1)){
-		ret=ret.mul(Decimal.fromDecimal(window.parent.v.wscbaseValue.sqrt().div(10).add(1)));
+		ret=ret.mul(Decimal.fromDecimal(window.parent.v.wscbaseValue.root(4).div(10).add(1)));
 	}
 	if(window.parent.player.tier01.gte(63)){
 		ret=ret.mul(Decimal.fromDecimal(window.parent.player.tier01).log10().add(1));
 	}else if(window.parent.player.tier01.gte(2)){
-		ret=ret.mul(Decimal.fromDecimal(window.parent.player.tier01).log10().div(1.5).add(1));
+		ret=ret.mul(Decimal.fromDecimal(window.parent.player.tier01).log10().div(2).add(1));
 	}
 	if(window.parent.player.tier01.gte(25)){
-		ret=ret.mul(Decimal.fromDecimal(window.parent.player.PL1pts).add(100).log10().cbrt().add(1));
+		ret=ret.mul(Decimal.fromDecimal(window.parent.player.PL1pts).add(100).log10().root(6).add(1));
 	}
 	if(window.parent.player.tier02.gte(1)){
 		ret=ret.mul(Decimal.fromDecimal(window.parent.player.tier02).add(1).log10().div(2).add(1));
