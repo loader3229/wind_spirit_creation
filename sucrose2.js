@@ -77,7 +77,7 @@ function update(){
 	document.getElementById("sucrose4").style.display=(getSucroseLevel().gte(50)?"":"none");
 	document.getElementById("sucrose4").innerHTML="召唤持续风灵（消耗"+format(getAttackEnergy3().div(Decimal.fromDecimal(window.parent.player.energy.add(1))).mul(100))+"%"+"能量）";
 	if(window.parent.player.energy.lte(1e100))document.getElementById("sucrose4").innerHTML="召唤持续风灵（需要至少1e100能量）";
-	document.getElementById("monster").innerHTML=monsterInfo[monsterId][0]+" HP:"+formatWhole(monsterHP)+"/"+formatWhole(monsterInfo[monsterId][1]);
+	document.getElementById("monster").innerHTML = monsterInfo[monsterId][0] + " HP:" + formatWhole(monsterHP) + "/" + formatWhole(monsterInfo[monsterId][1]) + " 击败获得" + formatWhole(monsterInfo[monsterId][2]) + "经验值";
 	document.getElementById("b1").innerHTML=format(getSucroseBonus1());
 	document.getElementById("b2").innerHTML=format(getSucroseBonus2());
 	document.getElementById("b3").innerHTML=format(getSucroseBonus3());

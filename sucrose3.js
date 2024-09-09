@@ -1,6 +1,6 @@
 var modInfo={};
 function update(){
-	document.getElementById("sucrose1").innerHTML=formatWhole(getSucroseLevel())+" EXP:"+formatWhole(Decimal.fromDecimal(window.parent.player.sucrose.exp))+"/"+formatWhole(getSucroseLevelRequirement())+" ATK:"+formatWhole(getBaseAttack());
+	document.getElementById("sucrose1").innerHTML = formatWhole(Decimal.fromDecimal(window.parent.player.sucrose.level))+" EXP:"+formatWhole(Decimal.fromDecimal(window.parent.player.sucrose.exp))+"/"+formatWhole(getSucroseLevelRequirement())+" ATK:"+formatWhole(getBaseAttack());
 	
 	document.getElementById("wp1").innerHTML="等级"+formatWhole(Decimal.fromDecimal(window.parent.player.sucrose.weapon1))+"，升级需要"+formatWhole(weapon1cost())+"扩散点";
 	document.getElementById("b1").innerHTML=format(getWeaponBonus1());
