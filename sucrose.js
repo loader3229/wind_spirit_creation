@@ -15,8 +15,8 @@ function getSucroseLevelRequirement(){
 }
 
 function getSucroseBonus1(){
-	if(getSucroseLevel().gte(80))return getSucroseLevel().div(80);
-	return getSucroseLevel().sqrt().div(10);
+	if(getSucroseLevel().gte(80)) return getSucroseLevel().div(80);
+	return getSucroseLevel().div(100).add(0.1);
 }
 
 function getSucroseBonus2(){
