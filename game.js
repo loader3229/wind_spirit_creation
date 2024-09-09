@@ -497,7 +497,7 @@ function hardReset() {
         hotk: true,
 		
         sucrose: {
-            level: new Decimal(0),
+            level: new Decimal(1),
 			exp: new Decimal(0),
 			weapon1: new Decimal(0),
 		}
