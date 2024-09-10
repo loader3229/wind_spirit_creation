@@ -1,6 +1,6 @@
 var modInfo={};
 var monsterId=0;
-var monsterHP=new Decimal(100);
+var monsterHP=new Decimal(131);
 var Attack3Value=new Decimal(0);
 
 function getAttackEnergy(){
@@ -19,15 +19,15 @@ function getAttackEnergy3(){
 }
 
 function getAttack(){
-	return Decimal.floor(getAttackEnergy().log10().sqrt().mul(getBaseAttack()));
+	return Decimal.floor(getAttackEnergy().log10().sqrt().mul(getBaseAttack()).mul(monsterInfo[monsterId][3]).div(monsterInfo[monsterId][3]+500+Decimal.fromDecimal(window.parent.player.sucrose.level).toNumber()));
 }
 
 function getAttack2(){
-	return Decimal.floor(getAttackEnergy().log10().sqrt().mul(getBaseAttack()).mul(3));
+	return Decimal.floor(getAttackEnergy().log10().sqrt().mul(getBaseAttack()).mul(3).mul(monsterInfo[monsterId][3]).div(monsterInfo[monsterId][3]+500+Decimal.fromDecimal(window.parent.player.sucrose.level).toNumber()));
 }
 
 function getAttack3(){
-	return Decimal.floor(getAttackEnergy().log10().sqrt().mul(getBaseAttack()).mul(2));
+	return getAttackEnergy().log10().sqrt().mul(getBaseAttack());
 }
 
 function attack(){
@@ -68,7 +68,7 @@ function attack3(){
 }
 
 function update(){
-	document.getElementById("sucrose1").innerHTML = formatWhole(Decimal.fromDecimal(window.parent.player.sucrose.level))+" EXP:"+formatWhole(Decimal.fromDecimal(window.parent.player.sucrose.exp))+"/"+formatWhole(getSucroseLevelRequirement())+" ATK:"+formatWhole(getBaseAttack());
+	document.getElementById("sucrose1").innerHTML = formatWhole(Decimal.fromDecimal(window.parent.player.sucrose.level))+" EXP:"+formatWhole(Decimal.fromDecimal(window.parent.player.sucrose.exp))+"/"+formatWhole(getSucroseLevelRequirement())+" ATK:"+formatWhole(getBaseAttack())+" 风元素伤害加成："+format(getAttackEnergy().log10().sqrt().mul(Math.sqrt(5000)).sub(100))+"%";
 	document.getElementById("sucrose2").innerHTML="简式风灵攻击（消耗"+format(getAttackEnergy().div(Decimal.fromDecimal(window.parent.player.energy.add(1))).mul(100))+"%"+"能量）";
 	if(window.parent.player.energy.lte(100))document.getElementById("sucrose2").innerHTML="简式风灵攻击（需要至少100能量）";
 	document.getElementById("sucrose3").style.display=(getSucroseLevel().gte(20)?"":"none");
@@ -99,31 +99,31 @@ if(window.parent==window){
 	setInterval(update,50);
 }
 var monsterInfo=[
-	["水史莱姆 Lv5", 160, 150],
-	["火史莱姆 Lv10",256, 220],
-	["冰史莱姆 Lv15",410, 330],
-	["岩史莱姆 Lv20",655, 500],
-	["草史莱姆 Lv25",1049,750],
-	["雷史莱姆 Lv30",1678,1000],
+	["水史莱姆 Lv5", 131, 150, 525],
+	["火史莱姆 Lv10",229, 220, 550],
+	["冰史莱姆 Lv15",408, 330, 575],
+	["岩史莱姆 Lv20",708, 500, 600],
+	["草史莱姆 Lv25",916, 750, 625],
+	["雷史莱姆 Lv30",1178,1000,650],
 	
-	["丘丘人 Lv35",   2500, 1250],
-	["木盾丘丘人 Lv40",4000, 1600],
-	["火箭丘丘人 Lv45",6500, 2000],
-	["雷箭丘丘人 Lv50",10000,2500],
-	["冰箭丘丘人 Lv55",16000,3200],
-	["岩盾丘丘人 Lv60",25000,4000],
+	["丘丘人 Lv35",   2089, 1250,675],
+	["木盾丘丘人 Lv40",4042, 1600,700],
+	["火箭丘丘人 Lv45",5750, 2000,725],
+	["雷箭丘丘人 Lv50",7994,2500,750],
+	["冰箭丘丘人 Lv55",14754,3200,775],
+	["岩盾丘丘人 Lv60",25143,4000,800],
 
-	["火斧丘丘暴徒 Lv65",40000,5000],
-	["木盾丘丘暴徒 Lv70",65000,6400],
-	["岩盾丘丘暴徒 Lv75", 1e5 ,8000],
-	["冰盾丘丘暴徒 Lv80",1.6e5,10000],
-	["雷斧丘丘暴徒 Lv85",2.5e5,12000],
-	["水行丘丘游侠 Lv90", 4e5 ,14000],
+	["火斧丘丘暴徒 Lv65",40000,5000,825],
+	["木盾丘丘暴徒 Lv70",65000,6400,850],
+	["岩盾丘丘暴徒 Lv75", 1e5 ,8000,875],
+	["冰盾丘丘暴徒 Lv80",1.6e5,10000,900],
+	["雷斧丘丘暴徒 Lv85",2.5e5,12000,925],
+	["水行丘丘游侠 Lv90", 4e5 ,14000,950],
 
-	["遗迹守卫 Lv95", 6.5e5,17000],
-	["遗迹猎者 Lv100", 1e6 ,20000],
-	["遗迹重机 Lv105",1.6e6,24000],
-	["丘丘霜铠王 Lv110",2.5e6,28000],
-	["丘丘岩盔王 Lv115", 4e6 ,34000],
-	["丘丘雷兜王 Lv120",6.5e6,40000],
+	["遗迹守卫 Lv95", 6.5e5,17000,975],
+	["遗迹猎者 Lv100", 1e6 ,20000,1000],
+	["遗迹重机 Lv105",1.6e6,24000,1025],
+	["丘丘霜铠王 Lv110",2.5e6,28000,1050],
+	["丘丘岩盔王 Lv115", 4e6 ,34000,1075],
+	["丘丘雷兜王 Lv120",6.5e6,40000,1100],
 ];

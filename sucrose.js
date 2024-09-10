@@ -6,7 +6,7 @@
 }
 
 function getSucroseLevel() {
-	return Decimal.fromDecimal(window.parent.player.sucrose.level) ;
+	return Decimal.fromDecimal(window.parent.player.sucrose.level);
 }
 
 function getSucroseLevelRequirement(){
